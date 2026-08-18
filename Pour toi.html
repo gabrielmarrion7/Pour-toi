@@ -1,0 +1,697 @@
+<!--Note:The template file will be copied to a new file. When you change the code of the template file you can create new file with this base code. -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pour Mon Amour 💕</title>
+    <style>
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #ffe6f2;
+            font-family: 'Georgia', 'Segoe UI', serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* --- MESSAGES FLOTTANTS DÉCORATIFS (vague) --- */
+        .float-msg {
+            position: fixed;
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(214, 51, 132, 0.25);
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            animation: waveFloat 10s infinite ease-in-out;
+            font-family: 'Georgia', serif;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.15);
+            letter-spacing: 1px;
+        }
+        @keyframes waveFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0.2;
+            }
+            25% {
+                transform: translate(30px, -20px) rotate(2deg) scale(1.05);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-10px, -40px) rotate(-1deg) scale(0.95);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translate(20px, -15px) rotate(1.5deg) scale(1.02);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0.2;
+            }
+        }
+
+        /* --- FLEURS VOLANTES --- */
+        .flower {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 7s infinite ease-in-out;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(-60px) rotate(0deg) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(1.2);
+                opacity: 0.1;
+            }
+        }
+
+        /* --- CONTENEUR PRINCIPAL --- */
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* --- ZONE DE TEXTE TAPÉ --- */
+        #message-box {
+            font-size: 28px;
+            color: #d63384;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+            font-weight: bold;
+            line-height: 1.7;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.30);
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 25px rgba(255, 105, 180, 0.15);
+        }
+        #typing-text {
+            display: inline;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .heart-blink {
+            color: #ff4d94;
+            animation: blink 1s infinite;
+            display: inline-block;
+            margin-left: 4px;
+        }
+        @keyframes blink {
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        /* --- BOUTONS --- */
+        #continue-btn,
+        #question-section,
+        #result-section {
+            display: none;
+            margin-top: 40px;
+        }
+        button {
+            padding: 14px 38px;
+            font-size: 20px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.20);
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+
+        #continue-btn {
+            background: linear-gradient(135deg, #ff4d94, #ff1a75);
+            color: #fff;
+            font-size: 22px;
+            padding: 16px 50px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #32cd32, #1e8b1e);
+            color: #fff;
+            margin-right: 16px;
+        }
+        .btn-no {
+            background: linear-gradient(135deg, #ff6b6b, #d63031);
+            color: #fff;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #6c5ce7, #4834d4);
+            color: #fff;
+            margin-top: 16px;
+        }
+        .btn-view {
+            background: linear-gradient(135deg, #00b894, #00a381);
+            color: #fff;
+            font-size: 18px;
+            padding: 12px 32px;
+            margin-top: 20px;
+        }
+
+        /* --- ZONE QUESTIONS --- */
+        #question-section {
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 40px rgba(255, 105, 180, 0.20);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        #question-text {
+            font-size: 26px;
+            color: #6b0040;
+            margin-bottom: 30px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+        .question-sub {
+            font-size: 18px;
+            color: #a03a6e;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+        textarea {
+            width: 100%;
+            max-width: 480px;
+            padding: 16px 20px;
+            font-size: 18px;
+            border-radius: 20px;
+            border: 2px solid #ffb3d1;
+            outline: none;
+            background: #fffafc;
+            font-family: 'Georgia', serif;
+            resize: vertical;
+            min-height: 100px;
+            transition: border 0.3s;
+            margin: 10px auto;
+            display: block;
+            color: #3d1a2b;
+        }
+        textarea:focus {
+            border-color: #d63384;
+            box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.15);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        /* --- RÉSULTAT --- */
+        #result-section {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 50px 30px;
+            border-radius: 40px;
+            box-shadow: 0 8px 40px rgba(255, 105, 180, 0.30);
+            font-size: 24px;
+            line-height: 1.9;
+            color: #6b0040;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .emoji-big {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        /* --- SECTION RÉPONSES (viewer) --- */
+        #responses-section {
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 30px 28px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            text-align: left;
+            max-width: 600px;
+            margin: 30px auto 0;
+            display: none;
+        }
+        #responses-section h3 {
+            color: #6b0040;
+            font-size: 24px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .resp-item {
+            background: #fff5f9;
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            border-left: 5px solid #d63384;
+            font-size: 17px;
+            color: #2d1b24;
+            line-height: 1.6;
+        }
+        .resp-item strong {
+            color: #b82a6e;
+        }
+        .resp-empty {
+            text-align: center;
+            color: #a03a6e;
+            font-style: italic;
+            padding: 20px;
+        }
+        .btn-close-resp {
+            background: #ddd;
+            color: #444;
+            padding: 10px 28px;
+            font-size: 16px;
+            margin-top: 14px;
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+            #message-box {
+                font-size: 22px;
+                min-height: 120px;
+                margin-top: 40px;
+                padding: 16px;
+            }
+            #question-text {
+                font-size: 22px;
+            }
+            button {
+                font-size: 17px;
+                padding: 12px 28px;
+            }
+            .float-msg {
+                font-size: 14px;
+            }
+            #result-section {
+                font-size: 20px;
+                padding: 30px 18px;
+            }
+            textarea {
+                font-size: 16px;
+                min-height: 80px;
+            }
+            .btn-yes {
+                margin-right: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notif-badge {
+            display: inline-block;
+            background: #ff4d94;
+            color: #fff;
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .scroll-btn-wrap {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== MESSAGES FLOTTANTS ===== -->
+    <div class="float-msg" style="top:6%; left:3%; animation-delay:0s;">💕 Je t'aime</div>
+    <div class="float-msg" style="top:15%; right:2%; animation-delay:1.2s;">🌹 Toi & moi</div>
+    <div class="float-msg" style="bottom:20%; left:1%; animation-delay:2.5s;">✨ Mon cœur</div>
+    <div class="float-msg" style="bottom:8%; right:3%; animation-delay:0.7s;">💖 Toujours</div>
+    <div class="float-msg" style="top:45%; left:0%; animation-delay:3.8s;">🌸 Douceur</div>
+    <div class="float-msg" style="top:55%; right:0%; animation-delay:1.9s;">💗 Éternelle</div>
+    <div class="float-msg" style="top:30%; left:-1%; animation-delay:4.5s;">💞 Unique</div>
+    <div class="float-msg" style="bottom:35%; right:-1%; animation-delay:0.3s;">💎 Précieuse</div>
+    <div class="float-msg" style="top:8%; left:50%; animation-delay:2.1s;">🌟 Lumière</div>
+    <div class="float-msg" style="bottom:12%; left:45%; animation-delay:3.3s;">🍀 Chance</div>
+
+    <!-- ===== CONTENEUR ===== -->
+    <div class="container">
+
+        <!-- MESSAGES TAPÉS -->
+        <div id="message-box">
+            <span id="typing-text"></span>
+            <span class="heart-blink">❤️</span>
+        </div>
+
+        <!-- BOUTON CONTINUER -->
+        <button id="continue-btn" onclick="showQuestion1()">Continuer 💌</button>
+
+        <!-- ===== SECTION QUESTIONS ===== -->
+        <div id="question-section" class="fade-in">
+
+            <!-- Q1 -->
+            <div id="q1">
+                <div id="question-text">
+                    Si je te demandais de sortir avec moi, <br />accepterais-tu ? 💕
+                </div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="answerQ1(true)">OUI ! 😍</button>
+                    <button class="btn-no" onclick="answerQ1(false)">Non… 😔</button>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div id="q2" style="display:none;">
+                <div id="question-text">
+                    Qu'est-ce que tu aimes le plus chez moi ? <br />
+                    <span class="question-sub">(Raconte-moi tout, je veux tout savoir ❤️)</span>
+                </div>
+                <textarea id="q2-text" placeholder="Écris ici ce que tu ressens… 🌷"></textarea>
+                <button class="btn-submit" onclick="answerQ2()">Envoyer ma réponse 💌</button>
+            </div>
+
+            <!-- Q3 -->
+            <div id="q3" style="display:none;">
+                <div id="question-text">
+                    As-tu des sentiments pour moi ? 💖
+                </div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="answerQ3(true)">OUI, j'ai des sentiments ❤️</button>
+                    <button class="btn-no" onclick="answerQ3(false)">Non, pas vraiment… 💔</button>
+                </div>
+            </div>
+
+            <!-- Q4 finale -->
+            <div id="q4" style="display:none;">
+                <div id="question-text">
+                    Alors, après tout cela…<br /><br />
+                    Veux-tu être ma petite amie,<br />
+                    <span style="font-size:0.9em; color:#a03a6e;">
+                        la personne qui comprendra ma situation,<br />
+                        me soutiendra et me corrigera quand j'aurai tort ?<br />
+                    </span>
+                    <span style="font-size:0.7em; color:#c94f8a;">💍</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="answerQ4(true)">OUI, je veux être ta copine ! 💞</button>
+                    <button class="btn-no" onclick="answerQ4(false)">Non, je préfère rester amie… 🥺</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== RÉSULTAT FINAL ===== -->
+        <div id="result-section" class="fade-in">
+            <div class="emoji-big" id="result-emoji"></div>
+            <div id="result-message"></div>
+        </div>
+
+        <!-- ===== SECTION POUR VOIR LES RÉPONSES ===== -->
+        <div id="responses-section">
+            <h3>📋 Toutes les réponses de ma chérie</h3>
+            <div id="responses-list"></div>
+            <div style="text-align:center; margin-top:16px;">
+                <button class="btn-view" onclick="viewResponses()">🔄 Rafraîchir</button>
+                <button class="btn-close-resp" onclick="document.getElementById('responses-section').style.display='none'">
+                    ✕ Fermer
+                </button>
+            </div>
+            <div style="text-align:center; margin-top:14px; font-size:15px; color:#a03a6e;">
+                💡 Les réponses sont sauvegardées sur cette page.
+            </div>
+        </div>
+
+        <!-- ===== BOUTON POUR AFFICHER LES RÉPONSES ===== -->
+        <div class="scroll-btn-wrap">
+            <button class="btn-view" onclick="toggleResponses()">
+                📬 Voir les réponses de ma chérie
+                <span class="notif-badge" id="resp-count">0</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // 1. MESSAGES TAPÉS (FRANÇAIS)
+        // ============================================================
+        const messages = [
+            "Bienvenue, ma chérie ❤️",
+            "J'espère que tu vas bien?",
+            "J'ai quelque chose de très spécial à te dire…",
+            "Je pense à ça depuis si longtemps…",
+            "Tu es la personne la plus incroyable que je connaisse 🌹",
+            "Tu rends chaque jour plus lumineux simplement en étant toi…",
+            "J'admire ta gentillesse, ton sourire, ton cœur…",
+            "Tu sais je ne cesse de penser à toi je suis grave fan de toi",
+            "Je sais que de fois j'ai pas été une personne que tu espérais autant",
+            "Mais laisses moi le temps de te prouver que je suis meilleur que ça",
+            "Je ne t'adore pas seulement mais je t'aime sincèrement depuis longtemps...",
+            "Et je veux te poser une question très importante 💌"
+        ];
+
+        let msgIndex = 0;
+        let charIndex = 0;
+        const speed = 55;
+
+        function typeMessage() {
+            const current = messages[msgIndex];
+            if (charIndex < current.length) {
+                document.getElementById('typing-text').innerText += current[charIndex];
+                charIndex++;
+                setTimeout(typeMessage, speed);
+            } else {
+                setTimeout(() => {
+                    if (msgIndex < messages.length - 1) {
+                        msgIndex++;
+                        charIndex = 0;
+                        document.getElementById('typing-text').innerText = '';
+                        typeMessage();
+                    } else {
+                        document.getElementById('continue-btn').style.display = 'inline-block';
+                    }
+                }, 1500);
+            }
+        }
+
+        // ============================================================
+        // 2. FLEURS VOLANTES
+        // ============================================================
+        const flowers = ['🌸', '🌷', '💐', '🌹', '🌺', '💗', '💕', '💖', '🌼', '🌻'];
+
+        function createFlower() {
+            const f = document.createElement('div');
+            f.className = 'flower';
+            f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.animationDuration = (5 + Math.random() * 6) + 's';
+            f.style.fontSize = (24 + Math.random() * 24) + 'px';
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), 12000);
+        }
+        setInterval(createFlower, 700);
+
+        // ============================================================
+        // 3. GESTION DES RÉPONSES (STOCKAGE LOCAL UNIQUEMENT)
+        // ============================================================
+        const STORAGE_KEY = 'loveResponses';
+
+        function getResponses() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveResponse(q, answer) {
+            const data = getResponses();
+            data.push({
+                question: q,
+                answer: answer,
+                timestamp: new Date().toLocaleString('fr-FR')
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            updateBadge();
+        }
+
+        function updateBadge() {
+            const count = getResponses().length;
+            document.getElementById('resp-count').textContent = count;
+        }
+
+        // ============================================================
+        // 4. AFFICHER LES RÉPONSES
+        // ============================================================
+        function renderResponses() {
+            const data = getResponses();
+            const container = document.getElementById('responses-list');
+            if (data.length === 0) {
+                container.innerHTML = `<div class="resp-empty">Aucune réponse pour l'instant… 💭</div>`;
+                return;
+            }
+            let html = '';
+            data.forEach((r, i) => {
+                html += `
+                    <div class="resp-item">
+                        <strong>#${i+1}</strong> &nbsp; <strong>${r.question}</strong><br />
+                        <span style="color:#4a1f30;">${r.answer}</span><br />
+                        <span style="font-size:13px; color:#a03a6e;">${r.timestamp}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function viewResponses() {
+            renderResponses();
+            document.getElementById('responses-section').style.display = 'block';
+            document.getElementById('responses-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleResponses() {
+            const el = document.getElementById('responses-section');
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                viewResponses();
+            }
+        }
+
+        // ============================================================
+        // 5. QUESTIONS — FLUX
+        // ============================================================
+        function showQuestion1() {
+            document.getElementById('message-box').style.display = 'none';
+            document.getElementById('continue-btn').style.display = 'none';
+            document.getElementById('question-section').style.display = 'block';
+            document.getElementById('q1').style.display = 'block';
+            document.getElementById('q2').style.display = 'none';
+            document.getElementById('q3').style.display = 'none';
+            document.getElementById('q4').style.display = 'none';
+        }
+
+        function answerQ1(val) {
+            const answer = val ? 'OUI ❤️' : 'Non 💔';
+            saveResponse('Q1 – Si je te demandais de sortir avec moi, accepterais-tu ?', answer);
+            document.getElementById('q1').style.display = 'none';
+            document.getElementById('q2').style.display = 'block';
+            document.getElementById('q2').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function answerQ2() {
+            const text = document.getElementById('q2-text').value.trim();
+            if (text === '') {
+                alert('💕 Écris-moi un petit mot, s\'il te plaît… Je veux tout savoir !');
+                return;
+            }
+            saveResponse('Q2 – Qu\'est-ce que tu aimes le plus chez moi ?', text);
+            document.getElementById('q2').style.display = 'none';
+            document.getElementById('q3').style.display = 'block';
+            document.getElementById('q3').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function answerQ3(val) {
+            const answer = val ? 'OUI, j\'ai des sentiments ❤️' : 'Non, pas vraiment 💔';
+            saveResponse('Q3 – As-tu des sentiments pour moi ?', answer);
+            document.getElementById('q3').style.display = 'none';
+            document.getElementById('q4').style.display = 'block';
+            document.getElementById('q4').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function answerQ4(val) {
+            const answer = val ? 'OUI, je veux être ta copine ! 💞' : 'Non, je préfère rester amie… 🥺';
+            saveResponse('Q4 – Veux-tu être ma petite amie ?', answer);
+
+            document.getElementById('question-section').style.display = 'none';
+
+            const resultSection = document.getElementById('result-section');
+            resultSection.style.display = 'block';
+
+            const emoji = document.getElementById('result-emoji');
+            const msg = document.getElementById('result-message');
+
+            if (val) {
+                emoji.innerText = '🎉💍❤️';
+                msg.innerHTML = `
+                    <strong>TU FAIS DE MOI LA PERSONNE LA PLUS HEUREUSE DU MONDE ! 🥹❤️</strong><br /><br />
+                    Je n'arrive pas à y croire — tu as dit OUI ! 🎉<br />
+                    C'est le plus beau jour de ma vie. Je promets de t'aimer,<br />
+                    de te chérir et de te rendre heureuse chaque jour.<br /><br />
+                    <strong>Nous sommes officiellement ensemble ! 💑💕</strong><br />
+                    Je t'aime tellement, ma petite amie ! ❤️🌹
+                `;
+            } else {
+                emoji.innerText = '😔💔';
+                msg.innerHTML = `
+                    <strong>Je comprends… 🥺</strong><br /><br />
+                    Ce n'est pas grave, et je respecte complètement ta décision.<br />
+                    Tu restes une personne incroyable, et je suis tellement heureux<br />
+                    d'avoir pu te connaître.<br />
+                    Je veux juste que tu sois heureuse, quoi qu'il arrive. ❤️
+                `;
+            }
+
+            setTimeout(() => {
+                viewResponses();
+            }, 800);
+        }
+
+        // ============================================================
+        // 6. LANCEMENT
+        // ============================================================
+        window.onload = function() {
+            typeMessage();
+            updateBadge();
+            renderResponses();
+            document.getElementById('responses-section').style.display = 'none';
+        };
+
+        // Raccourci : Entrée dans le textarea Q2
+        document.addEventListener('DOMContentLoaded', function() {
+            const ta = document.getElementById('q2-text');
+            if (ta) {
+                ta.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        answerQ2();
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
